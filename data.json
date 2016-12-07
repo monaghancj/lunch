@@ -1,0 +1,122 @@
+{
+  "friends": [
+    {
+      "_id": "friends_0",
+      "name": "Will Sawyer",
+      "phone": "8435689966",
+      "preferences": {
+        "keywords": ["asian"],
+        "priceRating": "0"
+      }
+    },
+    {
+      "_id": "friends_1",
+      "name": "Jade Dunnaway",
+      "phone": "6018269920",
+      "preferences": {
+        "keywords": ["american"],
+        "priceRating": "1"
+      }
+    },
+    {
+      "_id": "friends_2",
+      "name": "Jesse Lee",
+      "phone": "8435806621",
+      "preferences": {
+        "keywords": ["jerk"],
+        "priceRating": "2"
+      }
+    }
+  ],
+  "circles": [
+    {
+      "_id": "circles_0",
+      "name": "Boys",
+      "isDefault": "true",
+      "friends": ["friends_0", "friends_2"]
+    },
+    {
+      "_id": "circles_1",
+      "name": "Family",
+      "isDefault": "false",
+      "friends": ["friends_1"]
+    }
+  ],
+  "sessions": {
+    "_id": "sessions_0",
+    "circleID": "circles_0",
+    "recomendations": [
+      {
+        "restaurantID": "restaurants_2",
+        "selectedRestaurant": "false",
+        "isCheckedIn": "false",
+        "votes": [
+          {
+            "userID": "friends_0",
+            "vote": "down",
+            "comment": "Server was never around, food was expensive"
+          },
+          {
+            "userID": "friends_2",
+            "vote": "up",
+            "comment": "Love the bloody mary, so worth 10 bucks"
+          }
+        ],
+        "restaurantRank": "1"
+      },
+      {
+        "restaurantID": "restaurants_3",
+        "selectedRestaurant": "false",
+        "isCheckedIn": "false",
+        "votes": [
+          {
+            "userID": "friends_0",
+            "vote": "down",
+            "comment": "Server was never around, food was expensive"
+          },
+          {
+            "userID": "friends_1",
+            "vote": "up",
+            "comment": "Love the frozen white russian, so worth 12 bucks"
+          }
+        ],
+        "restaurantRank": "2"
+      }
+    ],
+    "time-stamp": ""
+  },
+  "restaurants": [
+    {
+      "_id": "restaurants_0",
+      "openTableID": "10405",
+      "name": "Shem Creek Bar & Grill",
+      "address": "508 Mill St",
+      "city": "Mt Pleasant",
+      "state": "SC",
+      "area": "Charleston",
+      "postalCode": "29464",
+      "phone": "8438848102",
+      "latitude": "32.7929° N",
+      "longitude": "79.8785° W",
+      "priceRating": "null",
+      "imageURL": "https://www.google.com/maps/uv?hl=en&pb=!1s0x88fe70fcc8bf3145:0x310beaf20a90c511!2m16!2m2!1i80!2i80!3m1!2i20!16m10!1b1!2m2!1m1!1e1!2m2!1m1!1e3!2m2!1m1!1e4!3m1!7e115!4shttps://picasaweb.google.com/lh/sredir?uname%3D104272667973789488405%26id%3D6267210396262465122%26target%3DPHOTO!5sshem+creek+bar+and+grill+-+Google+Search&imagekey=!1e3!2s-M9rIxTpaLPw/Vvmapnnb_mI/AAAAAAAAAcA/2pp7DxLb_ugwh1pgiTEjC5seC2DhBA8BwCJkC&sa=X&ved=0ahUKEwiIyNqa_N3QAhWJyyYKHfVhA90QoioIdjAN",
+      "reservationURL": "http://www.opentable.com/shem-creek-bar-and-grill"
+    },
+    {
+      "_id": "restaurants_1",
+      "openTableID": "g2b97",
+      "name": "Mama Kims",
+      "address": "349 King St",
+      "city": "Charleston",
+      "state": "SC",
+      "area": "DownTown",
+      "postalCode": "29401",
+      "phone": "8435777717",
+      "latitude": "32.7848° N",
+      "longitude": "79.9358° W",
+      "priceRating": "null",
+      "imageURL": "https://www.google.com/maps/uv?hl=en&pb=!1s0x88fe7a6cafae9c7d:0xa5ecc56c3f9418db!2m16!2m2!1i80!2i80!3m1!2i20!16m10!1b1!2m2!1m1!1e1!2m2!1m1!1e3!2m2!1m1!1e4!3m1!7e115!4shttps://picasaweb.google.com/lh/sredir?uname%3D111692312172747514404%26id%3D5964384232886524258%26target%3DPHOTO!5sMama+Kims+-+Google+Search&imagekey=!1e3!2s-IPT4XGM8YTE/UsW_2_EkWWI/AAAAAAAAiIY/mksv2UXcFCYgdzGMgogIgHqfBo_Y28Y2ACJkC&sa=X&ved=0ahUKEwiTrend_t3QAhUE2SYKHf3XBusQoioIdzAK",
+      "reservationURL": ""
+    }
+  ]
+}

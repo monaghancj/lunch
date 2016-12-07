@@ -1,0 +1,10 @@
+{
+  "couch": {
+    "protocol": "http",
+    "hostname": "127.0.0.1",
+    "port": 5984,
+    "pathname": "lunch"
+  },
+  "cloudant": "http://monaghancj:burganday1.@monaghancj.cloudant.com/lunch",
+  "debug": true
+}
