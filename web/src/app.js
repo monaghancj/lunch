@@ -14,7 +14,7 @@ const App = React.createClass({
           <Match exactly pattern="/" component={Home} />
           <Match exactly pattern="/circles" component={Circles} />
           <Match pattern="/circles/new" component={CirclesForm} />
-          <Match exactly pattern="/circles/:id" component={Circle} />
+          <Match pattern="/circles/:id/show" component={Circle} />
           <Match pattern="/circles/:id/edit" component={CirclesForm} />
         </div>
       </BrowserRouter>

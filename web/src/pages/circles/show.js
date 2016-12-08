@@ -18,7 +18,7 @@ const Circle = React.createClass({
   componentDidMount: function() {
     data.get('circles', this.props.params.id)
       .then(circle => {
-        console.log('Circle: ' + circle)
+        console.log(circle)
         this.setState({circle})
       })
   },
@@ -39,7 +39,7 @@ const Circle = React.createClass({
         {transform(this.state.circle.friends)}
           <Link   //Not finished
             className="f6 grow link dim br-pill ba bw1 ph3 pv2 mb2 mr1 dib silver hover-blue"
-            to={`/circles/${this.state.circle.id}/edit`}>
+            to={`/circles/${this.state.circle._id}/edit`}>
             Edit
           </Link>
           {/* <a

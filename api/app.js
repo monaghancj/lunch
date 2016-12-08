@@ -9,6 +9,12 @@ const dal = require('./dal.js')
 
 app.use(bodyParser.json())
 
+// logger
+app.use(function(req, res, next) {
+  console.log(`${req.url}: ${req.method}`)
+  next()
+})
+
 //  ------  FRIENDS   ------  //
 app.post('/friends', (req, res, next) => {
   dal.createFriend(req.body, (err, result) => {
@@ -61,6 +67,7 @@ app.get('/circles', (req, res, next) => {
 })
 
 app.get('/circles/:id', (req, res, next) => {
+  // if id is valid then get otherwise handle error
   dal.getCircle(req.params.id, (err, result) => {
     console.log('API : ' + JSON.stringify(result))
     res.status(200).send(result)

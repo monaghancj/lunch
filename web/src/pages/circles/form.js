@@ -3,7 +3,8 @@ const data = require('../../utils/data')()
 const { Redirect } = require('react-router')
 const Select = require('react-select')
 var FilteredMultiSelect = require('react-filtered-multiselect')
-
+var R = require('ramda')
+const {contains, pluck, not} = R
 const CirclesForm = React.createClass({
   getInitialState: function() {
     return {
@@ -18,15 +19,33 @@ const CirclesForm = React.createClass({
     }
   },
   componentDidMount: function() {
+    var circleTarget = {}
+    if (this.props.params.id) {
+      data.get('circles', this.props.params.id)
+        .then(circle => circleTarget = circle)
+    }
     data.list('friends').then(res => {
-      var circle = {}
-      //this.req.params.id
-      var options = []
-      res.rows.map(friend => options.push({value: friend.id, text: friend.doc.name}))
+      var options = pluck('doc', res.rows).filter(person =>
+        not(
+          contains(person._id,
+            pluck('_id', this.state.circle.friends)
+          )
+        )
+      )
+
+      // res.rows.map(friend => {
+      //   var insideCircle = false
+      //   circleTarget.friends.map( circleFriend => {
+      //     if (circleFriend.id === friend.id)  { insideCircle = true }
+      //   })
+      //   if (!insideCircle) options.push({value: friend.id, text: friend.doc.name})
+      // })
+
       this.setState({
         allFriends:res.rows,
         Friends: res.rows,
-        options
+        options,
+        circle: circleTarget
       })
     })
   },
@@ -70,15 +89,22 @@ const CirclesForm = React.createClass({
       var circleFriends = []
       var allFriends = this.state.allFriends
       var options = []
-      circle.friends.map(circleFriend => circleFriend.value !== friend ? circleFriends.push(circleFriend) : null)
+      this.state.circle.friends.map(circleFriend => circleFriend.value !== friend ? circleFriends.push(circleFriend) : null)
       circle.friends = circleFriends
 
       var target = {}
-      this.state.Friends.map(f => f.id === friend ? target=f : null)
-      console.log('target: ' + target)
-      allFriends.push(target)
+      this.state.Friends.map(f => {
+        f.id === friend ? target=f : null
+      })
 
-      this.state.allFriends.map( friend => options.push({ value: friend.id, text: friend.doc.name }) )
+      if (!R.isEmpty(target)) {
+        allFriends.push(target)
+      }
+
+      this.state.allFriends.map( friend => {
+        options.push({ value: friend.id, text: friend.doc.name })
+      })
+
       this.setState({circle, options, allFriends})
     }
   },
@@ -87,10 +113,8 @@ const CirclesForm = React.createClass({
     if (this.state.circle.isDefault) {
       circle.isDefault = false
     } else {
-
       circle.isDefault = true
     }
-    console.log(JSON.stringify(circle))
     this.setState({circle})
   },
   render() {
@@ -108,7 +132,7 @@ const CirclesForm = React.createClass({
             <div className="w2 h2 bg-green" onClick={this.handleCheck}>{this.state.circle.isDefault ? <p>X</p> : null}</div>
           </div>
           <div>
-            {this.state.circle.friends.map(friend => <div>{friend.text}<div onClick={this.handleFriendRemove(friend.value)}>X</div></div>)}
+            {this.state.circle.friends.map(friend => <div>{friend.text ? friend.text : friend.name}<div onClick={this.handleFriendRemove(friend.value)}>X</div></div>)}
             <FilteredMultiSelect
               onChange={this.handleFriendSelect}
               options={this.state.options}

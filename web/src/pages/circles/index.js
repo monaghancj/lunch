@@ -30,7 +30,7 @@ const Circles = React.createClass({
       <div>
         <h2>Your Circles</h2>
         {transform(this.state.circles)}
-        <Link to="/circles/new" >Form </Link>
+        <Link to="/circles/new"  >Form </Link>
         <Link to="/">Home</Link>
       </div>
     )
