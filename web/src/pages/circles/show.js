@@ -24,18 +24,17 @@ const Circle = React.createClass({
   },
   render() {
     const transform = map(friend => {
-      return <div key={friend}>
+      return <div key={friend.id}>
                <Link
                  className="no-underline"
-                 to={`/friends/${friend}`}>
-                 {friend}
+                 to={`/friends/${friend.id}`}>
+                 {friend.name}
                </Link>
              </div>
     })
     return (
       <div>
         { this.state.removed ? <Redirect to="/circles"/> : null }
-        {JSON.stringify(this.state.circle)}
         <h1>{this.state.circle.name}</h1>
         {transform(this.state.circle.friends)}
           <Link   //Not finished
