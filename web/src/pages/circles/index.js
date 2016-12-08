@@ -12,7 +12,6 @@ const Circles = React.createClass({
   componentDidMount: function() {
     data.list('circles')
       .then(res => {
-        console.log(res.rows)
         this.setState({circles:res.rows})
       })
   },
@@ -21,7 +20,7 @@ const Circles = React.createClass({
       return <div key={circle.id}>
                <Link
                  className="no-underline"
-                 to={`/circles/${circle.id}`}>
+                 to={`/circles/${circle.id}/show`}>
                  {circle.doc.name}
                </Link>
              </div>

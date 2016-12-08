@@ -5,6 +5,7 @@ const Select = require('react-select')
 var FilteredMultiSelect = require('react-filtered-multiselect')
 var R = require('ramda')
 const {contains, pluck, not} = R
+
 const CirclesForm = React.createClass({
   getInitialState: function() {
     return {
@@ -32,6 +33,7 @@ const CirclesForm = React.createClass({
           )
         )
       )
+      console.log(options)
 
       // res.rows.map(friend => {
       //   var insideCircle = false
@@ -40,13 +42,20 @@ const CirclesForm = React.createClass({
       //   })
       //   if (!insideCircle) options.push({value: friend.id, text: friend.doc.name})
       // })
-
-      this.setState({
-        allFriends:res.rows,
-        Friends: res.rows,
-        options,
-        circle: circleTarget
-      })
+      if (R.isEmpty(circleTarget)) {
+        this.setState({
+          allFriends:res.rows,
+          Friends: res.rows,
+          options
+        })
+      } else {
+        this.setState({
+          allFriends:res.rows,
+          Friends: res.rows,
+          options,
+          circle: circleTarget
+        })
+      }
     })
   },
   handleChange(field) {

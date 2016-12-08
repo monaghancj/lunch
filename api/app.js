@@ -69,7 +69,6 @@ app.get('/circles', (req, res, next) => {
 app.get('/circles/:id', (req, res, next) => {
   // if id is valid then get otherwise handle error
   dal.getCircle(req.params.id, (err, result) => {
-    console.log('API : ' + JSON.stringify(result))
     res.status(200).send(result)
   })
 })
