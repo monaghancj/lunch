@@ -4,7 +4,7 @@ const { Redirect } = require('react-router')
 const Select = require('react-select')
 var FilteredMultiSelect = require('react-filtered-multiselect')
 var R = require('ramda')
-const {contains, pluck, not} = R
+const {contains, pluck, not, reject, filter} = R
 
 const CirclesForm = React.createClass({
   getInitialState: function() {
@@ -26,13 +26,12 @@ const CirclesForm = React.createClass({
         .then(circle => circleTarget = circle)
     }
     data.list('friends').then(res => {
-      var options = pluck('doc', res.rows).filter(person =>
-        not(
-          contains(person._id,
-            pluck('_id', this.state.circle.friends)
-          )
-        )
-      )
+      var options = pluck('doc', res.rows)
+      var circleFriendsIDs = pluck("id", circleTarget.friends)
+      var newArray = reject(person => {
+        contains(person._id, circleFriendsIDs)
+      }, options)
+      console.log(newArray)
       console.log(options)
 
       // res.rows.map(friend => {
