@@ -8,7 +8,8 @@ const CirclesForm = React.createClass({
   getInitialState: function() {
     return {
       circle: {
-        friends: []
+        friends: [],
+        isDefault: false
       },
       allFriends: [],
       options: [],
@@ -18,6 +19,8 @@ const CirclesForm = React.createClass({
   },
   componentDidMount: function() {
     data.list('friends').then(res => {
+      var circle = {}
+      //this.req.params.id
       var options = []
       res.rows.map(friend => options.push({value: friend.id, text: friend.doc.name}))
       this.setState({
@@ -79,10 +82,20 @@ const CirclesForm = React.createClass({
       this.setState({circle, options, allFriends})
     }
   },
+  handleCheck() {
+    var circle = this.state.circle
+    if (this.state.circle.isDefault) {
+      circle.isDefault = false
+    } else {
+
+      circle.isDefault = true
+    }
+    console.log(JSON.stringify(circle))
+    this.setState({circle})
+  },
   render() {
     return (
       <div>
-        {JSON.stringify(this.state.allFriends)}
         {this.state.resolved ? <Redirect to="/circles"/> : null}
         <h1> Circle Form </h1>
         <form onSubmit={this.handleSubmit}>
@@ -91,8 +104,8 @@ const CirclesForm = React.createClass({
             <input value={this.state.circle.name} onChange={this.handleChange('name')}/>
           </div>
           <div>
-            <label>Name</label>
-            <input value={this.state.circle.name} onChange={this.handleChange('name')}/>
+            <label>Default?</label>
+            <div className="w2 h2 bg-green" onClick={this.handleCheck}>{this.state.circle.isDefault ? <p>X</p> : null}</div>
           </div>
           <div>
             {this.state.circle.friends.map(friend => <div>{friend.text}<div onClick={this.handleFriendRemove(friend.value)}>X</div></div>)}
