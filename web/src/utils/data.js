@@ -16,6 +16,11 @@ module.exports = function() {
       }
     })
     .then(res => res.json())
+    .then(res => {
+      console.log(res)
+      return res
+    })
+    .catch(error => console.log("CAUGHT: " + error))
   }
 
   const get = function( model, id) {

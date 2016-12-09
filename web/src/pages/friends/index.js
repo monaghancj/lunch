@@ -32,7 +32,7 @@ const Friends = React.createClass({
         <Link
           className="f6 grow link dim br-pill ba bw1 ph3 pv2 mb2 dib silver hover-blue"
           to="/friends/new" >
-          Form
+          Add Friend
         </Link>
         <Link
           className="f6 grow link dim br-pill ba bw1 ph3 pv2 mb2 dib silver hover-green"

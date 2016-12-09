@@ -83,12 +83,26 @@ function updateFriend( friend, callback ) {
 
 //  --------  CIRCLES  ---------  //
 function createCircle(circle, callback) {
-  const id = "circles_" + circle.email
-  callback(null, {
-    "ok": true,
-    "id": id,
-    "rev": "1-01204iof7876hd34500",
-  })
+  // Call to couch retrieving a document with the given _id value.
+  if (typeof circle == "undefined" || circle === null) {
+    return callback(new Error('400Missing data for create'));
+  } else if (circle.hasOwnProperty('_id') === true) {
+    return callback(new Error('400Unnecessary id property within data.'));
+  } else if (circle.hasOwnProperty('_rev') === true) {
+    return callback(new Error('400Unnecessary rev property within data'));
+  } else if (circle.hasOwnProperty('name') !== true) {
+    return callback(new Error('400Missing name property within data'));
+  } else if (circle.hasOwnProperty('friends') !== true) {
+    return callback(new Error('400Missing your friends'));
+  } else {
+    circle.type = 'circles';
+    db.post(circle, function(err, response) {
+      if (err)
+        return callback(err);
+      if (response)
+        return callback(null, response);
+    })
+  }
 }
 
 function listCircles( callback ) {

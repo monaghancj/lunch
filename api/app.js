@@ -49,7 +49,10 @@ app.delete('/friends/:id', (req, res, next) => {
 
 //  ------  CIRCLES  ------  //
 app.post('/circles', (req, res, next) => {
+  console.log('here')
   dal.createCircle(req.body, (err, result) => {
+    if (err) console.log(err)
+    console.log('hit')
     res.status(201).send(result)
   })
 })

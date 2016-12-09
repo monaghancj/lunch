@@ -26,8 +26,7 @@ const CirclesForm = React.createClass({
     data.list('friends').then(res => {
       var allFriends = pluck('doc', res.rows)
       if (!(R.isEmpty(editCircle))) {
-        var circleFriendsIDs = pluck("id", editCircle.friends)
-        console.log(circleFriendsIDs)
+        var circleFriendsIDs = pluck("_id", editCircle.friends)
         var restFriends = reject(person =>
           contains(person._id, circleFriendsIDs)
         , allFriends)
@@ -54,10 +53,11 @@ const CirclesForm = React.createClass({
   },
   handleSubmit(e) {
     e.preventDefault()
+    console.log(this.state.circle)
     data.post('circles', this.state.circle)
-      .then(res => {
+      .then(res =>
         this.setState({ resolved: true })
-      })
+      )
   },
   handleCheck() {
     var circle = this.state.circle
@@ -75,7 +75,7 @@ const CirclesForm = React.createClass({
 
       var circle = this.state.circle
       var newArray = reject(person => {
-        return person.id === friend.id
+        return person._id === friend._id
       }, this.state.circle.friends)
       circle.friends = newArray
       this.setState({ circle, restFriends })
@@ -85,9 +85,9 @@ const CirclesForm = React.createClass({
     return (e) => {
       var circle = this.state.circle
       circle.friends.push(friend)
-      var restFriends = reject(person =>
-        person.id === friend.id
-      , this.state.restFriends)
+      var restFriends = reject(person => {
+        return person._id === friend._id
+      }, this.state.restFriends)
       this.setState({
         circle,
         restFriends
@@ -96,23 +96,24 @@ const CirclesForm = React.createClass({
   },
   render() {
     const transformCircle = map(friend => {
-      return <div key={friend.id}>
+      return <div key={friend._id}>
               {friend.name}
               <div className="dib w1 h1 ba br2" onClick={this.handleRemoveFriend(friend)}>-</div>
              </div>
     })
     const transform = map(friend => {
-      return <div key={friend.id}>
+      return <div key={friend._id}>
               {friend.name}
              </div>
     })
     const transformRest = map(friend => {
-      return <div className="" key={friend.id}>
+      return <div className="" key={friend._id}>
               {friend.name}
               <div className="dib w1 h1 ba br2" onClick={this.handleAddFriend(friend)}>+</div>
              </div>
     })
     return (
+
       <div>
         {this.state.resolved ? <Redirect to="/circles"/> : null}
         <h1> Circle Form </h1>
@@ -125,15 +126,11 @@ const CirclesForm = React.createClass({
             <label>Default?</label>
             <div className="w2 h2 bg-green" onClick={this.handleCheck}>{this.state.circle.isDefault ? <p>X</p> : null}</div>
           </div>
-          <div className="ba dib w4 vat">
+          <div className="ba dib w5 vat">
             <p>Circle Friends</p>
             {transformCircle(this.state.circle.friends)}
           </div>
-          <div className="ba dib w4 vat">
-            <p>All Friends</p>
-            {transform(this.state.allFriends)}
-          </div>
-          <div className="ba dib w4 vat">
+          <div className="ba dib w5 vat">
             <p>Rest Friends</p>
             {transformRest(this.state.restFriends)}
           </div>

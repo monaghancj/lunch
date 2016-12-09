@@ -16,11 +16,17 @@ const FriendsForm = React.createClass({
   },
   handleChange(field) {
     return (e) => {
-
+      let friend = {...this.state.friend}
+      friend[field] = e.target.value
+      this.setState({friend})
     }
   },
   handleSubmit(e) {
     e.preventDefault()
+    data.post('friends', this.state.circle)
+      .then(res =>
+        this.setState({ resolved: true })
+      )
   },
   render() {
     return (
@@ -42,7 +48,9 @@ const FriendsForm = React.createClass({
               <input value={this.state.friend.preferences} onChange={this.handleChange('preferences')}/>
             </div>
             <div>
-              <button>Submit</button>
+              <button
+                className="f6 grow link dim br-pill ba bw1 ph3 pv2 mb2 dib silver hover-green">
+                Submit</button>
             </div>
           </form>
           <Link
