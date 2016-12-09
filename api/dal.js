@@ -39,12 +39,26 @@ const dal = {
 
 //  -------   FRIENDS   --------  //
 function createFriend(friend, callback) {
-  const id = "friends_" + friend.email
-  callback(null, {
-    "ok": true,
-    "id": id,
-    "rev": "1-01204iof7876hd34500",
-  })
+  // Call to couch retrieving a document with the given _id value.
+  if (typeof friend == "undefined" || friend === null) {
+    return callback(new Error('400Missing data for create'));
+  } else if (friend.hasOwnProperty('_id') === true) {
+    return callback(new Error('400Unnecessary id property within data.'));
+  } else if (friend.hasOwnProperty('_rev') === true) {
+    return callback(new Error('400Unnecessary rev property within data'));
+  } else if (friend.hasOwnProperty('name') !== true) {
+    return callback(new Error('400Missing name property within data'));
+  } else if (friend.hasOwnProperty('phone') !== true) {
+    return callback(new Error('400Missing phone property within data'));
+  } else {
+    friend.type = 'friends'
+    db.post(friend, function(err, response) {
+      if (err)
+        return callback(err);
+      if (response)
+        return callback(null, response);
+    })
+  }
 }
 
 function listFriends( callback ) {
@@ -58,26 +72,23 @@ function listFriends( callback ) {
 }
 
 function getFriend( id, callback ) {
-  callback(null, {
-    "ok": true,
-    "id": id,
-    "rev": "1-01204iof7876hd34500",
+  getDocByID(id, (err, result) => {
+    if (err) callback(err, null)
+    callback(null, result)
   })
 }
 
 function deleteFriend( id, callback ) {
-  callback(null, {
-    "ok": true,
-    "id": "friends_thescienceguy@sciguy.com",
-    "rev": "2-9nadf8293r82jdf82"
+  removeDocByID(id, (err, result) => {
+    if (err) callback(err, null)
+    callback(null, result)
   })
 }
 
 function updateFriend( friend, callback ) {
-  callback(null, {
-    "ok": true,
-    "id": friend._id,
-    "rev": "2-9A6157A5EA545C99B00FF904EEF05FD9F"
+  updateDoc(friend, (err, result) => {
+    if (err) callback(err, null)
+    callback(null, result)
   })
 }
 
@@ -152,6 +163,13 @@ function updateCircle( circle, callback ) {
 //  --------  SESSIONS  ---------  //
 function createSession(session, callback) {
   const id = "Sessions_" + Date.now()
+  session.vid = id
+  db.post(session, function(err, response) {
+    if (err)
+      return callback(err);
+    if (response)
+      return callback(null, response);
+  })
   callback(null, {
     "ok": true,
     "id": id,
@@ -216,10 +234,9 @@ function listRestaurants( callback ) {
 }
 
 function getRestaurant( id, callback ) {
-  callback(null, {
-    "ok": true,
-    "id": id,
-    "rev": "1-01204iof7876hd34500",
+  getDocByID(id, (err, result) => {
+    if (err) callback(err, null)
+    callback(null, result)
   })
 }
 
@@ -286,6 +303,35 @@ function getDocByID(id, callback) {
               return callback(null, data)
             }
         });
+    }
+}
+
+function removeDocByID(id, callback) {
+    if (typeof id == "undefined" || id === null) {
+        return callback(new Error('400Missing id for delete'));
+    } else {
+      db.get(id, function(err, doc) {
+        if (err) { return callback(err); }
+        db.remove(doc, function(err, response) {
+          if (err) { return callback(err); }
+          callback(null, response)
+        })
+      })
+    }
+}
+
+function updateDoc(data, callback) {
+    if (typeof data == "undefined" || data === null) {
+        return callback(new Error('400Missing data for update'))
+    } else if (data.hasOwnProperty('_id') !== true) {
+        return callback(new Error('400Missing id property from data'))
+    } else if (data.hasOwnProperty('_rev') !== true) {
+        return callback(new Error('400Missing rev property from data'))
+    } else {
+      db.put(data, function(err, response) {
+        if (err) return callback(err)
+        if (response) return callback(null, response)
+      })
     }
 }
 

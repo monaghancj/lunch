@@ -14,6 +14,15 @@ const FriendsForm = React.createClass({
       }
     }
   },
+  componentDidMount: function() {
+    if (this.props.params.id) {
+      data.get('friends', this.props.params.id)
+        .then(friend => {
+          console.log(friend)
+          this.setState({friend: friend})
+        })
+    }
+  },
   handleChange(field) {
     return (e) => {
       let friend = {...this.state.friend}
@@ -23,7 +32,7 @@ const FriendsForm = React.createClass({
   },
   handleSubmit(e) {
     e.preventDefault()
-    data.post('friends', this.state.circle)
+    data.put('friends', this.state.friend)
       .then(res =>
         this.setState({ resolved: true })
       )
@@ -31,9 +40,10 @@ const FriendsForm = React.createClass({
   render() {
     return (
       <div>
+        {this.state.resolved ? <Redirect to="/friends" /> : null}
         <h1>Friends Form</h1>
         <div>
-          <form>
+          <form onSubmit={this.handleSubmit}>
             <div>
               <label>Name</label>
               <input value={this.state.friend.name} onChange={this.handleChange('name')}/>

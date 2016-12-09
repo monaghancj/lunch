@@ -2,6 +2,15 @@ const fetch = require('isomorphic-fetch')
 const url = process.env.REACT_APP_API
 
 module.exports = function() {
+  const remove = function (model, id) {
+    return fetch(`${url}/${model}/${id}`, {
+      method: 'delete',
+      headers: {
+        'content-type': 'application/json'
+      }
+    })
+      .then(res => res.json())
+  }
   const list = function (model) {
     return fetch(`${url}/${model}`)
       .then(res => res.json())
@@ -23,14 +32,22 @@ module.exports = function() {
     .catch(error => console.log("CAUGHT: " + error))
   }
 
-  const get = function( model, id) {
+  const get = function(model, id) {
     return fetch(`${url}/${model}/${id}`)
       .then(res => res.json())
+  }
+
+  const put = function(model, id) {
+    return fetch(`${url}/${model}/${id}`)
+      .then(res => res.json())
+      .catch(error => console.log(error))
   }
 
   return {
     list,
     post,
-    get
+    get,
+    remove,
+    put
   }
 }

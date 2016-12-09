@@ -17,7 +17,9 @@ app.use(function(req, res, next) {
 
 //  ------  FRIENDS   ------  //
 app.post('/friends', (req, res, next) => {
+  console.log(req.body)
   dal.createFriend(req.body, (err, result) => {
+    if (err) console.log(err)
     res.status(201).send(result)
   })
 })
@@ -25,6 +27,7 @@ app.post('/friends', (req, res, next) => {
 app.put('/friends/:id', (req, res, next) => {
   // Check that _id and _rev is given in body
   dal.updateFriend(req.body, (err, result) => {
+    console.log(err)
     res.status(201).send(result)
   })
 })
@@ -49,10 +52,8 @@ app.delete('/friends/:id', (req, res, next) => {
 
 //  ------  CIRCLES  ------  //
 app.post('/circles', (req, res, next) => {
-  console.log('here')
   dal.createCircle(req.body, (err, result) => {
     if (err) console.log(err)
-    console.log('hit')
     res.status(201).send(result)
   })
 })

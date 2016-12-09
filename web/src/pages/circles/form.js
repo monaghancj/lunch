@@ -72,7 +72,6 @@ const CirclesForm = React.createClass({
     return (e) => {
       var restFriends = this.state.restFriends
       restFriends.push(friend)
-
       var circle = this.state.circle
       var newArray = reject(person => {
         return person._id === friend._id
