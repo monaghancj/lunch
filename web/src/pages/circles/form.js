@@ -74,11 +74,8 @@ const CirclesForm = React.createClass({
       restFriends.push(friend)
 
       var circle = this.state.circle
-      var newArray = filter(person => {
-        console.log(person)
-        console.log('-------------------')
-        console.log(friend)
-        person._id === friend
+      var newArray = reject(person => {
+        return person.id === friend.id
       }, this.state.circle.friends)
       circle.friends = newArray
       this.setState({ circle, restFriends })
@@ -88,9 +85,9 @@ const CirclesForm = React.createClass({
     return (e) => {
       var circle = this.state.circle
       circle.friends.push(friend)
-      var restFriends = filter(person => {
-        person._id === friend
-      }, this.state.restFriends)
+      var restFriends = reject(person =>
+        person.id === friend.id
+      , this.state.restFriends)
       this.setState({
         circle,
         restFriends
