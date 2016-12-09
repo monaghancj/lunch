@@ -37,8 +37,14 @@ module.exports = function() {
       .then(res => res.json())
   }
 
-  const put = function(model, id) {
-    return fetch(`${url}/${model}/${id}`)
+  const put = function(model, doc) {
+    return fetch(`${url}/${model}/${doc._id}`, {
+      method: 'put',
+      body: JSON.stringify(doc),
+      headers: {
+        'content-type': 'application/json'
+      }
+    })
       .then(res => res.json())
       .catch(error => console.log(error))
   }
