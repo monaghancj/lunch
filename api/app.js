@@ -26,6 +26,7 @@ app.post('/friends', (req, res, next) => {
 app.put('/friends/:id', (req, res, next) => {
   // Check that _id and _rev is given in body
   dal.updateFriend(req.body, (err, result) => {
+    if (err) console.log(err)
     res.status(201).send(result)
   })
 })

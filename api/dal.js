@@ -227,17 +227,6 @@ function deleteRestaurant( id, callback ) { // NOT NEEDED
 }
 
 function updateRestaurant( restaurant, callback ) {
-  // db.get('mydoc', function(err, doc) {
-  //   if (err) { return console.log(err); }
-  //   db.put({
-  //     _id: 'mydoc',
-  //     _rev: doc._rev,
-  //     title: "Let's Dance"
-  //   }, function(err, response) {
-  //     if (err) { return console.log(err); }
-  //     // handle response
-  //   });
-  // });
   callback(null, {
     "ok": true,
     "id": restaurant._id,

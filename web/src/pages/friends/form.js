@@ -18,7 +18,6 @@ const FriendsForm = React.createClass({
     if (this.props.params.id) {
       data.get('friends', this.props.params.id)
         .then(friend => {
-          console.log(friend)
           this.setState({friend: friend})
         })
     }
@@ -32,10 +31,18 @@ const FriendsForm = React.createClass({
   },
   handleSubmit(e) {
     e.preventDefault()
-    data.put('friends', this.state.friend)
-      .then(res =>
-        this.setState({ resolved: true })
-      )
+    if (this.props.params.id) {
+      data.put('friends', this.state.friend)
+        .then(res =>
+          this.setState({ resolved: true })
+        )
+    } else {
+      data.post('friends', this.state.friend)
+        .then(res =>
+          this.setState({ resolved: true })
+        )
+    }
+
   },
   render() {
     return (

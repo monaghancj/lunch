@@ -54,10 +54,17 @@ const CirclesForm = React.createClass({
   handleSubmit(e) {
     e.preventDefault()
     console.log(this.state.circle)
-    data.post('circles', this.state.circle)
-      .then(res =>
-        this.setState({ resolved: true })
-      )
+    if (this.props.params.id) {
+      data.put('circles', this.state.circle)
+        .then(res =>
+          this.setState({ resolved: true })
+        )
+    } else {
+      data.post('circles', this.state.circle)
+        .then(res =>
+          this.setState({ resolved: true })
+        )
+    }
   },
   handleCheck() {
     var circle = this.state.circle
