@@ -6,6 +6,8 @@ const CirclesForm = require('./pages/circles/form')
 const Friend = require('./pages/friends/show')
 const Friends = require('./pages/friends/index')
 const FriendsForm = require('./pages/friends/form')
+const Restaurants = require('./pages/restaurants/index')
+const Restaurant = require('./pages/restaurants/show')
 const Home = require('./pages/home')
 const About = require('./pages/about')
 
@@ -24,6 +26,8 @@ const App = React.createClass({
           <Match pattern="/friends/new" component={FriendsForm} />
           <Match pattern="/friends/:id/show" component={Friend} />
           <Match pattern="/friends/:id/edit" component={FriendsForm} />
+          <Match exactly pattern="/restaurants" component={Restaurants} />
+          {/* <Match pattern="/restaurant/:name/show" component={Restaurant} /> */}
         </div>
       </BrowserRouter>
     )

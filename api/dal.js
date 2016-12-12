@@ -134,29 +134,16 @@ function getCircle( id, callback ) {
 }
 
 function deleteCircle( id, callback ) {
-  callback(null, {
-    "ok": true,
-    "id": "circles_someUniqueIdentifier",
-    "rev": "2-9nadf8293r82jdf82"
+  removeDocByID(id, (err, result) => {
+    if (err) callback(err, null)
+    callback(null, result)
   })
 }
 
 function updateCircle( circle, callback ) {
-  // db.get('mydoc', function(err, doc) {
-  //   if (err) { return console.log(err); }
-  //   db.put({
-  //     _id: 'mydoc',
-  //     _rev: doc._rev,
-  //     title: "Let's Dance"
-  //   }, function(err, response) {
-  //     if (err) { return console.log(err); }
-  //     // handle response
-  //   });
-  // });
-  callback(null, {
-    "ok": true,
-    "id": circle._id,
-    "rev": "2-9A6157A5EA545C99B00FF904EEF05FD9F"
+  updateDoc(circle, (err, result) => {
+    if (err) callback(err, null)
+    callback(null, result)
   })
 }
 
@@ -169,11 +156,6 @@ function createSession(session, callback) {
       return callback(err);
     if (response)
       return callback(null, response);
-  })
-  callback(null, {
-    "ok": true,
-    "id": id,
-    "rev": "1-01204iof7876hd34500",
   })
 }
 
@@ -188,27 +170,23 @@ function listSessions( callback ) {
 }
 
 function getSession( id, callback ) {
-
-  callback(null, {
-    "ok": true,
-    "id": id,
-    "rev": "1-01204iof7876hd34500",
+  getDocByID(id, (err, result) => {
+    if (err) callback(err, null)
+    callback(null, result)
   })
 }
 
 function deleteSession( id, callback ) {
-  callback(null, {
-    "ok": true,
-    "id": "sessions_someUniqueDateIdentifier",
-    "rev": "2-9nadf8293r82jdf82"
+  removeDocByID(id, (err, result) => {
+    if (err) callback(err, null)
+    callback(null, result)
   })
 }
 
 function updateSession( session, callback ) {
-  callback(null, {
-    "ok": true,
-    "id": session._id,
-    "rev": "2-9A6157A5EA545C99B00FF904EEF05FD9F"
+  updateDoc(session, (err, result) => {
+    if (err) callback(err, null)
+    callback(null, result)
   })
 }
 
@@ -240,7 +218,7 @@ function getRestaurant( id, callback ) {
   })
 }
 
-function deleteRestaurant( id, callback ) {
+function deleteRestaurant( id, callback ) { // NOT NEEDED
   callback(null, {
     "ok": true,
     "id": "restaurants_someUniqueDateIdentifier",

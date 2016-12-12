@@ -1,7 +1,17 @@
 const fetch = require('isomorphic-fetch')
 const url = process.env.REACT_APP_API
+const APIKey = 'AIzaSyAaBlfGybqXLxKdfjW_4U5loA30yFaCy5I'
+const { pick, map } = require('ramda')
 
 module.exports = function() {
+  const listRestaurants = function(zip) {
+    return fetch(`http://opentable.herokuapp.com/api/restaurants?zip=${zip}`)
+      .then(res => res.json())
+  }
+  const getZipCode = function(long, lat) {
+    return fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=${APIKey}`)
+      .then(res => res.json())
+  }
   const remove = function (model, id) {
     return fetch(`${url}/${model}/${id}`, {
       method: 'delete',
@@ -50,6 +60,8 @@ module.exports = function() {
   }
 
   return {
+    listRestaurants,
+    getZipCode,
     list,
     post,
     get,

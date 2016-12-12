@@ -22,6 +22,13 @@ const Circle = React.createClass({
         this.setState({circle})
       })
   },
+  handleRemove(e) {
+    e.preventDefault()
+    data.remove('circles', this.props.params.id)
+      .then(result =>
+        this.setState({removed: true})
+      )
+  },
   render() {
     const transform = map(friend => {
       return <div key={friend.id}>
@@ -42,11 +49,11 @@ const Circle = React.createClass({
             to={`/circles/${this.state.circle._id}/edit`}>
             Edit
           </Link>
-          {/* <a
+          <a
             className="f6 grow link dim br-pill ba bw1 ph3 pv2 mb2 mr1 dib silver hover-red"
             onClick={this.handleRemove}>
               Remove
-          </a>*/}
+          </a>
           <Link
             className="f6 grow link dim br-pill ba bw1 ph3 pv2 mb2 dib silver hover-green"
             to={"/circles"}>
