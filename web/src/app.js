@@ -8,7 +8,7 @@ const Friends = require('./pages/friends/index')
 const FriendsForm = require('./pages/friends/form')
 const Restaurants = require('./pages/restaurants/index')
 const Restaurant = require('./pages/restaurants/show')
-const Session = require('./pages/session/index')
+const Session = require('./pages/session/show')
 const SessionForm = require('./pages/session/form')
 const Home = require('./pages/home')
 const About = require('./pages/about')
@@ -30,7 +30,7 @@ const App = React.createClass({
           <Match pattern="/friends/:id/edit" component={FriendsForm} />
           <Match exactly pattern="/restaurants" component={Restaurants} />
           {/* <Match pattern="/restaurant/:name/show" component={Restaurant} /> */}
-          <Match exactly pattern="/session" component={Session} />
+          <Match exactly pattern="/session/:id/show" component={Session} />
           <Match pattern="/session/new" component={SessionForm} />
         </div>
       </BrowserRouter>

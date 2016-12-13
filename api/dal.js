@@ -149,13 +149,10 @@ function updateCircle( circle, callback ) {
 
 //  --------  SESSIONS  ---------  //
 function createSession(session, callback) {
-  const id = "Sessions_" + Date.now()
-  session.vid = id
+  session.type = 'sessions'
   db.post(session, function(err, response) {
-    if (err)
-      return callback(err);
-    if (response)
-      return callback(null, response);
+    if (err) return callback(err);
+    if (response) return callback(null, response);
   })
 }
 
@@ -261,16 +258,16 @@ function listDocs(sortBy, startKey, limit, callback) {
 }
 
 function getDocByID(id, callback) {
-    if (typeof id == "undefined" || id === null) {
-        return callback(new Error('400Missing id parameter'));
-    } else {
-        db.get(id, function(err, data) {
-            if (err) return callback(err);
-            if (data) {
-              return callback(null, data)
-            }
-        });
-    }
+  if (typeof id == "undefined" || id === null) {
+    return callback(new Error('400Missing id parameter'));
+  } else {
+    db.get(id, function(err, data) {
+      if (err) return callback(err);
+      if (data) {
+        return callback(null, data)
+      }
+    });
+  }
 }
 
 function removeDocByID(id, callback) {
