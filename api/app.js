@@ -1,19 +1,51 @@
 const http = require('http')
 const app = require('express')()
+const jwt = require('express-jwt')
 const cors = require('cors')
+const fetch = require('isomorphic-fetch')
 app.use(cors({ origin: true, credentials: true }))
 const bodyParser = require('body-parser')
 const HTTPError = require('node-http-error')
 const port = process.env.PORT || 4000
 const dal = require('./dal.js')
+require('dotenv').config()
 
 app.use(bodyParser.json())
+
+const checkJwt = jwt({
+  secret: process.env.AUTH0_SECRET
+})
+
 
 // logger
 app.use(function(req, res, next) {
   console.log(`${req.url}: ${req.method}`)
   next()
 })
+
+app.get('/res/:zip', (req, res, next) => {
+  return fetch(`http://opentable.herokuapp.com/api/restaurants?zip=${req.params.zip}`)
+    .then(result => {
+      console.log("API1: " + result)
+      res.status(200).send(result)
+    })
+    .catch(err => console.log("ERR: " + err))
+})
+
+app.get('/resRef/:zip/:price', (req, res, next) => {
+  console.log(req.url)
+  return fetch(`http://opentable.herokuapp.com/api/restaurants?zip=${req.params.zip}&price=${req.params.price}`)
+    .then(result => result.json())
+    .then(result => {
+      console.log("API: " + JSON.stringify(result))
+      res.status(200).send(result)
+    })
+    .catch(err => console.log("ERR: " + err))
+})
+
+app.get('/protected', checkJwt, (req, res, next) =>
+  res.send({ message: 'Your are authorized' })
+)
 
 //  ------  FRIENDS   ------  //
 app.post('/friends', (req, res, next) => {

@@ -7,6 +7,12 @@ const Home = React.createClass({
       defaultCircle: ''
     }
   },
+  componentDidMount() {
+    if (!this.props.auth.loggedIn() &&
+      this.props.location.hash.indexOf('access_token') === -1) {
+      this.props.auth.login()
+    }
+  },
   render() {
     return (
       <div>

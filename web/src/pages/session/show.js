@@ -9,7 +9,8 @@ const Session = React.createClass({
     return {
       session: {
         recipients: [],
-        restaurantRef: {}
+        restaurantRef: {},
+        resolved: false
       }
     }
   },
@@ -18,6 +19,7 @@ const Session = React.createClass({
       .then(res => {
         data.getRestaurantRef(res.zip, res.rating)
           .then(result => {
+            console.log(result)
             var session = res
             session.restaurantRef = result.restaurants[Math.floor((Math.random() * (result.restaurants.length)) + 1)]
             this.setState({ session })
@@ -28,6 +30,7 @@ const Session = React.createClass({
   handleNext() {
     data.getRestaurantRef(this.state.session.zip, this.state.session.rating)
       .then(result => {
+        console.log(result)
         var session = this.state.session
         session.restaurantRef = result.restaurants[Math.floor((Math.random() * (result.restaurants.length)) + 1)]
         this.setState({session})
@@ -39,6 +42,7 @@ const Session = React.createClass({
   },
   handleGo() {
     console.log('GO')
+    this.setState({resolved: true})
   },
   render() {
     const transformRecipients = map(friend => {
@@ -47,8 +51,9 @@ const Session = React.createClass({
              </div>
     })
     return (
-      <div>
-        <h1 className="tc mb0">{this.state.session.restaurantRef.name}</h1>
+      <div className="tc w-70-ns">
+        {this.state.resolved ? <Redirect to={`/`} /> : null}
+        <h1 className="tc mb0 pa2">{this.state.session.restaurantRef.name}</h1>
         <div className="tc pv2 pv5-ns">
           <img src={this.state.session.restaurantRef.image_url} className="w-50-ns w-90 br2"/>
           <div>

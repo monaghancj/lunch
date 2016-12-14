@@ -12,8 +12,12 @@
   "dependencies": {
     "body-parser": "^1.15.2",
     "cors": "^2.8.1",
+    "dotenv": "^2.0.0",
+    "es6-promise": "^4.0.5",
     "express": "^4.14.0",
+    "express-jwt": "^5.1.0",
     "http": "0.0.0",
+    "isomorphic-fetch": "^2.2.1",
     "node-http-error": "^1.0.0",
     "path": "^0.12.7",
     "pouchdb-http": "^6.0.2",

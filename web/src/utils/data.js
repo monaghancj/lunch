@@ -4,30 +4,58 @@ const APIKey = 'AIzaSyAaBlfGybqXLxKdfjW_4U5loA30yFaCy5I'
 const { pick, map } = require('ramda')
 
 module.exports = function() {
+  const setAuth = () => 'Bearer ' + window.localStorage.getItem('id_token')
+
   const listRestaurants = function(zip) {
-    return fetch(`http://opentable.herokuapp.com/api/restaurants?zip=${zip}`)
+    return fetch(`${url}/res/${zip}`)
+    // return fetch(`http://opentable.herokuapp.com/api/restaurants?zip=${zip}`, {
+    //   headers: {
+    //     Authorization: setAuth()
+    //   }
+    // })
       .then(res => res.json())
+      .then(res => res)
+      .catch(err => console.log(err))
   }
   const getRestaurantRef = function(zip, price) {
-    //return fetch(`http://opentable.herokuapp.com/api/restaurants?zip=${zip}&price=${price}`)
-    return fetch(`http://opentable.herokuapp.com/api/restaurants?zip=${zip}`)
+    return fetch(`${url}/resRef/${zip}/${price}`, {
+      headers: {
+        'content-type': 'application/json'
+      }
+    })
+    // return fetch(`http://opentable.herokuapp.com/api/restaurants?zip=${zip}&price=${price}`, {
+    //   headers: {
+    //     Authorization: setAuth()
+    //   }
+    // })
       .then(res => res.json())
+      .then(res => res)
+      .catch(err => console.log(err))
   }
   const getZipCode = function(long, lat) {
-    return fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=${APIKey}`)
+    return fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=${APIKey}`, {
+      headers: {
+        Authorization: setAuth()
+      }
+    })
       .then(res => res.json())
   }
   const remove = function (model, id) {
     return fetch(`${url}/${model}/${id}`, {
       method: 'delete',
       headers: {
+        Authorization: setAuth(),
         'content-type': 'application/json'
       }
     })
       .then(res => res.json())
   }
   const list = function (model) {
-    return fetch(`${url}/${model}`)
+    return fetch(`${url}/${model}`,{
+      headers: {
+        Authorization: setAuth()
+      }
+    })
       .then(res => res.json())
   }
 
@@ -36,19 +64,21 @@ module.exports = function() {
       method: 'post',
       body: JSON.stringify(doc),
       headers: {
+        Authorization: setAuth(),
         'content-type': 'application/json'
       }
     })
     .then(res => res.json())
-    .then(res => {
-      console.log(res)
-      return res
-    })
+    .then(res => { return res })
     .catch(error => console.log("CAUGHT: " + error))
   }
 
   const get = function(model, id) {
-    return fetch(`${url}/${model}/${id}`)
+    return fetch(`${url}/${model}/${id}`, {
+      headers: {
+        Authorization: setAuth()
+      }
+    })
       .then(res => res.json())
   }
 
@@ -57,6 +87,7 @@ module.exports = function() {
       method: 'put',
       body: JSON.stringify(doc),
       headers: {
+        Authorization: setAuth(),
         'content-type': 'application/json'
       }
     })
