@@ -8,6 +8,11 @@ module.exports = function() {
     return fetch(`http://opentable.herokuapp.com/api/restaurants?zip=${zip}`)
       .then(res => res.json())
   }
+  const getRestaurantRef = function(zip, price) {
+    //return fetch(`http://opentable.herokuapp.com/api/restaurants?zip=${zip}&price=${price}`)
+    return fetch(`http://opentable.herokuapp.com/api/restaurants?zip=${zip}`)
+      .then(res => res.json())
+  }
   const getZipCode = function(long, lat) {
     return fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=${APIKey}`)
       .then(res => res.json())
@@ -61,6 +66,7 @@ module.exports = function() {
 
   return {
     listRestaurants,
+    getRestaurantRef,
     getZipCode,
     list,
     post,

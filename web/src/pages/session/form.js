@@ -9,9 +9,9 @@ const SessionForm = React.createClass({
     return {
       session: {
         circle: {},
-        price: '',
         recipients: [],
-        rating: 1
+        rating: 1,
+        zip: 29464
       },
       friends: [],
       circles: [],
