@@ -25,8 +25,9 @@ app.use(function(req, res, next) {
 
 app.get('/res/:zip', (req, res, next) => {
   return fetch(`http://opentable.herokuapp.com/api/restaurants?zip=${req.params.zip}`)
+    .then(result => result.json())
     .then(result => {
-      console.log("API1: " + result)
+      console.log(result)
       res.status(200).send(result)
     })
     .catch(err => console.log("ERR: " + err))

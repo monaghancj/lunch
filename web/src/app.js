@@ -1,5 +1,5 @@
 const React = require('react')
-const { HashRouter, Match, Redirect } = require('react-router')
+const { HashRouter, Match, Redirect, Link } = require('react-router')
 const auth = require('./utils/auth')(
   process.env.REACT_APP_ID,
   process.env.REACT_APP_DOMAIN
@@ -46,9 +46,19 @@ const App = React.createClass({
 const MatchWhenAuthorized = ({component: Component, ...rest}) =>
   <Match {...rest} render={ props =>
     auth.loggedIn() ?
-      <div>
-        <button onClick={e => auth.logout() }>logout</button>
-        <Component {...props} />
+      <div className="dib w-100">
+        <h1 className="dib pl2 pt1 w4 light-green f2 ma1">Grabba</h1>
+        <a
+          className="ma1 fr f6 grow link dim br-pill ba bw1 ph3 pv2 dib silver hover-red v-top"
+          onClick={auth.logout}>
+          logout
+        </a>
+        <Link
+          className="ma1 fr f6 grow link dim br-pill ba bw1 ph3 pv2 dib silver hover-green v-top"
+          to="/">
+          Home
+        </Link>
+        <Component {...props} logout={auth.logout}/>
       </div> : <Redirect to="/" />
   }/>
 

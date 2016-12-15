@@ -7,7 +7,11 @@ module.exports = function() {
   const setAuth = () => 'Bearer ' + window.localStorage.getItem('id_token')
 
   const listRestaurants = function(zip) {
-    return fetch(`${url}/res/${zip}`)
+    return fetch(`${url}/res/${zip}`,{
+      headers: {
+        'content-type': 'application/json'
+      }
+    })
     // return fetch(`http://opentable.herokuapp.com/api/restaurants?zip=${zip}`, {
     //   headers: {
     //     Authorization: setAuth()

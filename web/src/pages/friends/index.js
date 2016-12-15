@@ -27,15 +27,15 @@ const Friends = React.createClass({
     })
     return (
       <div>
-        <h2>Your Friends</h2>
+        <h1 className="tc light-red fw4">Your Friends</h1>
         {transform(this.state.friends)}
         <Link
-          className="f6 grow link dim br-pill ba bw1 ph3 pv2 mb2 dib silver hover-blue"
+          className="f6 ma1 grow link dim br-pill ba bw1 ph3 pv2 mb2 dib silver hover-blue"
           to="/friends/new" >
           Add Friend
         </Link>
         <Link
-          className="f6 grow link dim br-pill ba bw1 ph3 pv2 mb2 dib silver hover-green"
+          className="f6 ma1 grow link dim br-pill ba bw1 ph3 pv2 mb2 dib silver hover-green"
           to="/">
           Home
         </Link>

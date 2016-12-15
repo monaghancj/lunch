@@ -23,7 +23,10 @@ const Restaurants = React.createClass({
     //   })
     // }
     data.listRestaurants(this.state.zip)
-      .then(res => this.setState({restaurants:res.restaurants}))
+      .then(res => {
+        console.log(res)
+        this.setState({restaurants:res.restaurants})
+      })
   },
   render() {
     const transform = map(restaurant => {
@@ -32,22 +35,20 @@ const Restaurants = React.createClass({
                   <img src={restaurant.image_url} alt={restaurant.name} className="w-100 db black-10 br2" />
                   <dl className="mt2 f6 lh-copy">
                     <dt className="clip">Title</dt>
-                    <dd className="ml0 black truncate w-100">{restaurant.name}</dd>
+                    <dd className="ml0 gray truncate w-100">{restaurant.name}</dd>
                   </dl>
                 </Link>
               </div>
     })
     return (
       <div>
-        <h2>Restaurants</h2>
+        <h1 className="tc light-red fw4">
+          Restaurants in {this.state.zip}
+        </h1>
         <div className="cf pa2">
           {transform(this.state.restaurants)}
         </div>
-        <Link
-          className="f6 grow link dim br-pill ba bw1 ph3 pv2 mb2 dib silver hover-green"
-          to="/">
-          Home
-        </Link>
+
       </div>
     )
   }

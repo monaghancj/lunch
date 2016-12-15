@@ -27,7 +27,7 @@ const Circles = React.createClass({
     })
     return (
       <div>
-        <h2>Your Circles</h2>
+        <h1 className="tc light-red fw4">Your Circles</h1>
         {transform(this.state.circles)}
         <Link to="/circles/new"  >Form </Link>
         <Link to="/">Home</Link>
