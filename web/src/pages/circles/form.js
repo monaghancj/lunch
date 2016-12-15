@@ -120,7 +120,7 @@ const CirclesForm = React.createClass({
     })
     return (
 
-      <div>
+      <div className="center w-90 w-70-ns br3 mb5">
         {this.state.resolved ? <Redirect to="/circles"/> : null}
         <h1> Circle Form </h1>
         <form onSubmit={this.handleSubmit}>
@@ -129,29 +129,30 @@ const CirclesForm = React.createClass({
             <input value={this.state.circle.name} onChange={this.handleChange('name')}/>
           </div>
           <div>
-            <label>Default?</label>
-            <div className="w2 h2 bg-green" onClick={this.handleCheck}>{this.state.circle.isDefault ? <p>X</p> : null}</div>
+            <label className="dib">Default?</label>
+            <div className="w2 h2 bg-green white br-100 dib" onClick={this.handleCheck}>{this.state.circle.isDefault ? <p style={{paddingLeft: '10px', lineHeight: '25px', verticalAlign: 'top'}}>X</p> : null}</div>
           </div>
-          <div className="ba dib w5 vat">
-            <p>Circle Friends</p>
+          <div className="dib w5 vat v-top">
+            <h1 className="mb0">Circle Friends</h1>
             {transformCircle(this.state.circle.friends)}
           </div>
-          <div className="ba dib w5 vat">
-            <p>Rest Friends</p>
+          <div className="dib w5 vat v-top">
+            <h1 className="mb0 ">Rest of Friends</h1>
             {transformRest(this.state.restFriends)}
           </div>
-          <div>
+          <div className="ma3">
             <button
               className="f6 grow link dim br-pill ba bw1 ph3 pv2 mb2 dib silver hover-green">
               Submit
             </button>
+            <Link
+              className="f6 grow link dim br-pill ba bw1 ph3 pv2 mb2 dib silver hover-red"
+              to={"/circles"}>
+                Cancel
+            </Link>
           </div>
         </form>
-        <Link
-          className="f6 grow link dim br-pill ba bw1 ph3 pv2 mb2 dib silver hover-red"
-          to={"/circles"}>
-            Cancel
-        </Link>
+
       </div>
     )
   }

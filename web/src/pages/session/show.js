@@ -19,7 +19,6 @@ const Session = React.createClass({
       .then(res => {
         data.getRestaurantRef(res.zip, res.rating)
           .then(result => {
-            console.log(result)
             var session = res
             session.restaurantRef = result.restaurants[Math.floor((Math.random() * (result.restaurants.length)) + 1)]
             this.setState({ session })
@@ -27,21 +26,30 @@ const Session = React.createClass({
 
       })
   },
+  handleText() {
+    // this.state.session.recipients.map( recipient => {
+    //   console.log(recipient)
+    //   client.sendMessage({
+    //     to: '8438229929',
+    //     from: twilioNumber,
+    //     body: 'Happy Holidays, Lord Vador'
+    //   });
+    // })
+    console.log('text')
+    data.text()
+  },
   handleNext() {
     data.getRestaurantRef(this.state.session.zip, this.state.session.rating)
       .then(result => {
-        console.log(result)
         var session = this.state.session
         session.restaurantRef = result.restaurants[Math.floor((Math.random() * (result.restaurants.length)) + 1)]
         this.setState({session})
       })
   },
   handleCall() {
-    console.log('call')
     window.location.href=`tel:${this.state.session.restaurantRef.phone}`
   },
   handleGo() {
-    console.log('GO')
     this.setState({resolved: true})
   },
   render() {
@@ -51,31 +59,24 @@ const Session = React.createClass({
              </div>
     })
     return (
-      <div className="tc w-70-ns">
+      <div className="tc w-70-ns center">
         {this.state.resolved ? <Redirect to={`/`} /> : null}
         <h1 className="tc mb0 pa2">{this.state.session.restaurantRef.name}</h1>
-        <div className="tc pv2 pv5-ns">
-          <img src={this.state.session.restaurantRef.image_url} className="w-50-ns w-90 br2"/>
+        <div className="tc center pv2 pv5-ns pb1">
+          <img src={this.state.session.restaurantRef.image_url} className="w-50-ns w-90 br3"/>
           <div>
             <a className="f6 grow no-underline br-pill ba bw1 ph3 pv2 mb2 dib light-green ma1 hover-green" onClick={this.handleGo}>Go</a>
             <a className="f6 grow no-underline br-pill ba bw1 ph3 pv2 mb2 dib green ma1 hover-dark-green" onClick={this.handleCall}>Call</a>
             <a className="f6 grow no-underline br-pill ba bw1 ph3 pv2 mb2 dib light-red ma1 hover-red" onClick={this.handleNext}>Next</a>
-            <Link className="f6 grow no-underline br-pill ba bw1 ph3 pv2 mb2 dib red ma1 hover-dark-red" to="/">Home</Link>
           </div>
-          {JSON.stringify(this.state.session.restaurantRef)}
         </div>
         <div>
-          <h2>Circle</h2>
+          <h1 className="mb0">Circle</h1>
           {transformRecipients(this.state.session.recipients)}
         </div>
         <div>
-          <button>Send Message</button>
-        </div>
-        <div>
-
-        </div>
-        <div>
-          <Link to="/">Home</Link>
+          <a className="f6 grow no-underline br-pill ba bw1 ph3 pv2 mb2 dib blue ma1 hover-light-blue"
+            onClick={this.handleText}>Send Message</a>
         </div>
       </div>
     )

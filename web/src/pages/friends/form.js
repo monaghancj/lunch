@@ -46,7 +46,7 @@ const FriendsForm = React.createClass({
   },
   render() {
     return (
-      <div>
+      <div className="center w-90 w-70-ns br3 mb5">
         {this.state.resolved ? <Redirect to="/friends" /> : null}
         <h1>Friends Form</h1>
         <div>

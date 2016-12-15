@@ -10,12 +10,14 @@ const port = process.env.PORT || 4000
 const dal = require('./dal.js')
 require('dotenv').config()
 
+var twilio = require('twilio')
+var client = twilio('ACcf6e0abeb9a211a15897911e9011a3b7', '7f5af7896eeccc375592814046fe49a7')
+
 app.use(bodyParser.json())
 
 const checkJwt = jwt({
   secret: process.env.AUTH0_SECRET
 })
-
 
 // logger
 app.use(function(req, res, next) {
@@ -23,11 +25,19 @@ app.use(function(req, res, next) {
   next()
 })
 
+app.get('/text', (req, res, next) => {
+  console.log('asdf')
+  client.sendMessage({
+    to: '18438229929',
+    from: twilioNumber,
+    body: 'Happy Holidays, Lord Vador'
+  })
+})
+
 app.get('/res/:zip', (req, res, next) => {
   return fetch(`http://opentable.herokuapp.com/api/restaurants?zip=${req.params.zip}`)
     .then(result => result.json())
     .then(result => {
-      console.log(result)
       res.status(200).send(result)
     })
     .catch(err => console.log("ERR: " + err))
@@ -38,7 +48,6 @@ app.get('/resRef/:zip/:price', (req, res, next) => {
   return fetch(`http://opentable.herokuapp.com/api/restaurants?zip=${req.params.zip}&price=${req.params.price}`)
     .then(result => result.json())
     .then(result => {
-      console.log("API: " + JSON.stringify(result))
       res.status(200).send(result)
     })
     .catch(err => console.log("ERR: " + err))

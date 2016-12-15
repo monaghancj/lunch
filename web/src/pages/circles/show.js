@@ -31,7 +31,7 @@ const Circle = React.createClass({
   },
   render() {
     const transform = map(friend => {
-      return <div key={friend.id}>
+      return <div key={friend.id} className="light-red ma1">
                <Link
                  className="no-underline"
                  to={`/friends/${friend.id}`}>
@@ -40,10 +40,13 @@ const Circle = React.createClass({
              </div>
     })
     return (
-      <div>
+      <div className="center w-90 w-70-ns tc br3 mb5">
         { this.state.removed ? <Redirect to="/circles"/> : null }
         <h1>{this.state.circle.name}</h1>
-        {transform(this.state.circle.friends)}
+        <div>
+          {transform(this.state.circle.friends)}
+        </div>
+        <div className="ma3">
           <Link   //Not finished
             className="f6 grow link dim br-pill ba bw1 ph3 pv2 mb2 mr1 dib silver hover-blue"
             to={`/circles/${this.state.circle._id}/edit`}>
@@ -59,6 +62,7 @@ const Circle = React.createClass({
             to={"/circles"}>
               Return
           </Link>
+        </div>
       </div>
     )
   }

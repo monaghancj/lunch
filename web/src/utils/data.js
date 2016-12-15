@@ -6,17 +6,21 @@ const { pick, map } = require('ramda')
 module.exports = function() {
   const setAuth = () => 'Bearer ' + window.localStorage.getItem('id_token')
 
+  const text = () => {
+    return fetch(`text`,{
+      headers: {
+        'content-type': 'application/json'
+      }
+    })
+    .catch(err => console.log(err))
+  }
+
   const listRestaurants = function(zip) {
     return fetch(`${url}/res/${zip}`,{
       headers: {
         'content-type': 'application/json'
       }
     })
-    // return fetch(`http://opentable.herokuapp.com/api/restaurants?zip=${zip}`, {
-    //   headers: {
-    //     Authorization: setAuth()
-    //   }
-    // })
       .then(res => res.json())
       .then(res => res)
       .catch(err => console.log(err))
@@ -27,11 +31,6 @@ module.exports = function() {
         'content-type': 'application/json'
       }
     })
-    // return fetch(`http://opentable.herokuapp.com/api/restaurants?zip=${zip}&price=${price}`, {
-    //   headers: {
-    //     Authorization: setAuth()
-    //   }
-    // })
       .then(res => res.json())
       .then(res => res)
       .catch(err => console.log(err))
@@ -107,6 +106,7 @@ module.exports = function() {
     post,
     get,
     remove,
-    put
+    put,
+    text
   }
 }

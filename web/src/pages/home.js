@@ -17,11 +17,15 @@ const Home = React.createClass({
     return (
       <div>
         <h1 className="tc light-red f1 mb0">Grabba</h1>
-        <div className="pa4 tc">
-          <Link className="br-100 h4 w4 dib bg-light-green no-underline"
-               alt="avatar"
-               to="/session/new">
-            <span className="washed-green h4">GO</span>
+        <div className="tc ma4 mb5">
+          <Link
+            className="br-100 h4 w4 dib bg-light-green no-underline ba b--light-yellow hover-bg-light-gray  bw4"
+            alt="avatar"
+            to="/session/new">
+            <div style={{paddingTop:'42px'}} className="dib v-mid pt4">
+              <span className="f2 silver o-60 hover-light-green">GO</span>
+            </div>
+
           </Link>
         </div>
         <div className="tc">
