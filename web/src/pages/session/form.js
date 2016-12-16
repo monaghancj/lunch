@@ -26,6 +26,16 @@ const SessionForm = React.createClass({
       session
     }))
     data.list('friends').then(res => this.setState({ friends: pluck('doc', res.rows) }))
+    if(navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        data.getZipCode(position.coords.latitude, position.coords.longitude)
+          .then(res => {
+            var session = this.state.session
+            session.zip = res.postalCodes[0].postalCode
+            this.setState({session})
+          })
+      })
+    }
   },
   handleChange(field) {
     return (e) => {

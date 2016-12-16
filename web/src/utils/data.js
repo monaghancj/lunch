@@ -35,13 +35,10 @@ module.exports = function() {
       .then(res => res)
       .catch(err => console.log(err))
   }
-  const getZipCode = function(long, lat) {
-    return fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=${APIKey}`, {
-      headers: {
-        Authorization: setAuth()
-      }
-    })
+  const getZipCode = function(lat, lng) {
+    return fetch(`http://api.geonames.org/findNearbyPostalCodesJSON?lat=${lat}&lng=${lng}&username=demo`)
       .then(res => res.json())
+      .then(res => res)
   }
   const remove = function (model, id) {
     return fetch(`${url}/${model}/${id}`, {

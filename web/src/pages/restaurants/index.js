@@ -27,6 +27,13 @@ const Restaurants = React.createClass({
         console.log(res)
         this.setState({restaurants:res.restaurants})
       })
+
+    if(navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        data.getZipCode(position.coords.latitude, position.coords.longitude)
+          .then(res => this.setState({zip: res.postalCodes[0].postalCode}))
+      })
+    }
   },
   render() {
     const transform = map(restaurant => {
