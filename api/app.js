@@ -1,3 +1,4 @@
+require('dotenv').config()
 const http = require('http')
 const app = require('express')()
 const jwt = require('express-jwt')
@@ -8,10 +9,6 @@ const bodyParser = require('body-parser')
 const HTTPError = require('node-http-error')
 const port = process.env.PORT || 4000
 const dal = require('./dal.js')
-require('dotenv').config()
-
-var twilio = require('twilio')
-var client = twilio('ACcf6e0abeb9a211a15897911e9011a3b7', '7f5af7896eeccc375592814046fe49a7')
 
 app.use(bodyParser.json())
 
