@@ -4,7 +4,8 @@ PouchDB.plugin(require('pouchdb-mapreduce'))
 const fetchConfig = require('zero-config')
 var R = require('ramda')
 
-var config = fetchConfig(path.join(__dirname, '..'), {dcValue: 'test'})
+//var config = fetchConfig(path.join(__dirname, '..'), {dcValue: 'test'})
+var config = fetchConfig(__dirname, {dcValue: 'test'})
 const urlFormat = require('url').format
 const db = new PouchDB(urlFormat(config.get("cloudant")))
 

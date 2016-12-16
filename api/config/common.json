@@ -5,6 +5,6 @@
     "port": 5984,
     "pathname": "lunch"
   },
-  "cloudant": "http://monaghancj:burganday1.@monaghancj.cloudant.com/lunch",
+  "cloudant": "https://api-qlvmrucmxe.now.sh/",
   "debug": true
 }
