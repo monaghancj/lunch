@@ -22,15 +22,6 @@ app.use(function(req, res, next) {
   next()
 })
 
-app.get('/text', (req, res, next) => {
-  console.log('asdf')
-  client.sendMessage({
-    to: '18438229929',
-    from: twilioNumber,
-    body: 'Happy Holidays, Lord Vador'
-  })
-})
-
 app.get('/res/:zip', (req, res, next) => {
   return fetch(`http://opentable.herokuapp.com/api/restaurants?zip=${req.params.zip}`)
     .then(result => result.json())
@@ -41,7 +32,6 @@ app.get('/res/:zip', (req, res, next) => {
 })
 
 app.get('/resRef/:zip/:price', (req, res, next) => {
-  console.log(req.url)
   return fetch(`http://opentable.herokuapp.com/api/restaurants?zip=${req.params.zip}&price=${req.params.price}`)
     .then(result => result.json())
     .then(result => {
